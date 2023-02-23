@@ -31,8 +31,8 @@ source_x86_64=(
   "${pkgname}-url-handler.desktop"
 )
 
-_main_desktop_sha256='edfeb13aa50d35fbae748ff545b5bd126be916dbfeda682157e3d5ce81574db2'
-_url_handler_desktop_sha256='d06d9d057b507d1747a8ed8ae304beb5e20c7bf887c362c941d85b02c893069e'
+_main_desktop_sha256='9ebe80f2fe463a82747bf39013ff3406054707f01a503e9545a6f6556a36b0de'
+_url_handler_desktop_sha256='dc854ca319cad429ddc13b6d0646d295d249d82fab4f565ae63eec13d572c049'
 sha256sums_x86_64=(
   'fcc7dc5cbe8deaae5467ec7ead5fead6d650cf2df91f79d67f0fef33490a1827'
   "${_main_desktop_sha256}"
