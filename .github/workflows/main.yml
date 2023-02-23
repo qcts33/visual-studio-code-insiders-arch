@@ -82,7 +82,7 @@ jobs:
           git commit -m "Update to ${INPUT_VERSION}+${INPUT_BUILD_NUMBER}"
           git push
           echo "Updated"
-          echo "updated=true" $GITHUB_OUTPUT
+          echo "updated=true" >> $GITHUB_OUTPUT
       - name: Upload artefact
         uses: actions/upload-artifact@v3
         with:
