@@ -46,7 +46,7 @@ package() {
   install -d "${pkgdir}/opt/${pkgname}"
   install -d "${pkgdir}/usr/bin"
   install -d "${pkgdir}/usr/share/applications"
-  install -d "${pkgdir}/usr/share/icons"
+  install -d "${pkgdir}/usr/share/icons" 
 
   install -m644 "${srcdir}/${_pkg}/resources/app/LICENSE.rtf" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.rtf"
   install -m644 "${srcdir}/${_pkg}/resources/app/resources/linux/code.png" "${pkgdir}/usr/share/icons/${pkgname}.png"
@@ -54,5 +54,7 @@ package() {
   install -m644 "${srcdir}/${pkgname}-url-handler.desktop" "${pkgdir}/usr/share/applications/${pkgname}-url-handler.desktop"
 
   cp -r "${srcdir}/${_pkg}/"* "${pkgdir}/opt/${pkgname}" -R
-  ln -s "/opt/${pkgname}/bin/code-insiders" "${pkgdir}/usr/bin/code-insiders"
+
+  # Launcher
+  install -m755 "${srcdir}/${pkgname}-bin.sh" "${pkgdir}/usr/bin/code-insiders"
 }
