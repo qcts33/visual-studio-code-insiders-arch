@@ -24,7 +24,7 @@ jobs:
       build_number: ${{ steps.get-build-number.outputs.build_number }}
       sha256-x86_64: ${{ steps.sha256-x86_64.outputs.hash }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Download latest tar
         run: curl -JLO "$(cat PKGBUILD | grep -Po "_src_x86_64=\"\K.+\"" | rev | cut -c2- | rev)"
       - name: Get build number
@@ -84,7 +84,7 @@ jobs:
           echo "Updated"
           echo "updated=true" $GITHUB_OUTPUT
       - name: Upload artefact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.pkg.outputs.pkgfile }}
           path: ${{ steps.pkg.outputs.pkgfile }}
@@ -98,11 +98,11 @@ jobs:
     steps:
       - name: Install dependencies and update
         run: pacman -Syu --noconfirm --noprogressbar --needed base-devel git
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: repo/
       - name: Download artefacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: pkg/
       - name: Create repo files
