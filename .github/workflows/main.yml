@@ -31,7 +31,7 @@ jobs:
         id: get-build-number
         run: |
           build_number="$(echo ./code-insider-*.tar.gz | grep -Po "\.\/code-insider-x64-\K.+" | rev | cut -c8- | rev)"
-          echo "::set-output name=build_number::${build_number}"
+          echo "build_number=${build_number}" >> $GITHUB_OUTPUT
           echo "Latest build number: ${build_number}"
       - name: Extract tar
         run: tar -xvzf ./code-insider-*.tar.gz
@@ -39,13 +39,13 @@ jobs:
         id: get-version
         run: |
           version="$(./VSCode-linux-x64/bin/code-insiders --version | head -n1 | sed "s/-/_/")"
-          echo "::set-output name=version::${version}"
+          echo "version=${version}" >> $GITHUB_OUTPUT
           echo "Latest version: ${version}"
       - name: Get SHA256 of x86_64 tar
         id: sha256-x86_64
         run: |
           hash="$(sha256sum ./code-insider-*.tar.gz | awk '{ print $1 }')"
-          echo "::set-output name=hash::${hash}"
+          echo "hash=${hash}" >> $GITHUB_OUTPUT
           echo "SHA256 x86_64: ${hash}"
 
   edit-pkgbuild:
@@ -55,8 +55,8 @@ jobs:
     outputs:
       updated: ${{ steps.push.outputs.updated }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
       - name: Update version
@@ -78,11 +78,11 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           git add PKGBUILD .SRCINFO
-          git diff --cached --exit-code > /dev/null && echo "::set-output name=updated::false" && exit 0 || :
+          git diff --cached --exit-code > /dev/null && echo "updated=false" >> $GITHUB_OUTPUT && exit 0 || :
           git commit -m "Update to ${INPUT_VERSION}+${INPUT_BUILD_NUMBER}"
           git push
           echo "Updated"
-          echo "::set-output name=updated::true"
+          echo "updated=true" $GITHUB_OUTPUT
       - name: Upload artefact
         uses: actions/upload-artifact@v2
         with:
